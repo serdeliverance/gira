@@ -1,12 +1,12 @@
-import "../styles/globals.css";
-import type { AppProps } from "next/app";
-import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import '../styles/globals.css'
+import type { AppProps } from 'next/app'
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
 
 const basicTheme = createTheme({
   palette: {
-    mode: "light",
+    mode: 'light',
   },
-});
+})
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <CssBaseline />
       <Component {...pageProps} />
     </ThemeProvider>
-  );
+  )
 }
 
-export default MyApp;
+export default MyApp
