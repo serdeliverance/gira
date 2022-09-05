@@ -8,13 +8,13 @@ const menuItems: string[] = ['Inbox', 'Starred', 'Send Email', 'Drafts']
 
 export const Sidebar = () => {
 
-    const { sideMenuOpen } = useContext(UIContext)
+    const { sideMenuOpen, closeSideMenu } = useContext(UIContext)
 
   return (
     <Drawer
         anchor='left'
         open={ sideMenuOpen }
-        onClose={ () => console.log('cerrando')}
+        onClose={ closeSideMenu }
     >
         <Box sx={{ width: 250 }}>
 
