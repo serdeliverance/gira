@@ -1,14 +1,33 @@
 import { FC, ReactNode, useReducer } from 'react';
 import { Entry } from '../../interfaces';
 import { EntriesContext, entriesReducer } from './';
-
+import { v4 as uuidv4 } from 'uuid'
 export interface EntriesState {
     entries: Entry[]
 }
 
 
 const ENTRIES_INITIAL_STATE: EntriesState = {
-    entries: [],
+    entries: [
+        {
+            _id: uuidv4(),
+            description: 'something 1',
+            status: 'pending',
+            createdAt: Date.now()
+        },
+        {
+            _id: uuidv4(),
+            description: 'something 2',
+            status: 'finished',
+            createdAt: Date.now() - 100000
+        },
+        {
+            _id: uuidv4(),
+            description: 'something 3',
+            status: 'pending',
+            createdAt: Date.now() - 200000
+        }
+],
 }
 
 interface Props {
