@@ -1,8 +1,9 @@
 import { createContext } from 'react';
+import { Entry } from '../../interfaces';
 
 
 interface ContextProps {
-    entries: []; // TODO define datatype
+    entries: Entry[]
 }
 
 
