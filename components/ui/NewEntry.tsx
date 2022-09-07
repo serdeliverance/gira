@@ -1,10 +1,18 @@
 import { Box, Button, TextField } from '@mui/material'
 import React from 'react'
 import SaveOutlinedIcon from '@mui/icons-material/Save'
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 
 export const NewEntry = () => {
   return (
-    <>
+    <Box sx={{ marginBottom: 2, paddingX: 1}}>
+        <Button
+            startIcon={ <AddCircleOutlineIcon /> }
+            fullWidth
+            variant='outlined'
+        >
+            Add task
+        </Button>
         <TextField 
             fullWidth
             sx={{ marginTop: 2, marginBottom: 1}}
@@ -29,6 +37,6 @@ export const NewEntry = () => {
                 Save
             </Button>
         </Box>
-    </>
+    </Box>
   )
 }
