@@ -13,7 +13,7 @@ export const EntryCard: FC<Props> = ({ entry }) => {
     >   
         <CardActionArea>
             <CardContent>
-                <Typography sx={{ whiteSpace: 'pre-line' }}>Description</Typography>
+                <Typography sx={{ whiteSpace: 'pre-line' }}>{entry.description}</Typography>
             </CardContent>
         </CardActionArea>
 

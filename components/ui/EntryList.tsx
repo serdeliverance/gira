@@ -1,5 +1,5 @@
 import { List, Paper } from '@mui/material'
-import React, { FC, useContext } from 'react'
+import React, { FC, useContext, useMemo } from 'react'
 import { EntriesContext } from '../../context/entries'
 import { EntryStatus } from '../../interfaces'
 import { EntryCard } from './EntryCard'
@@ -12,7 +12,7 @@ export const EntryList: FC<Props> = ({ status }) => {
 
   const { entries } = useContext(EntriesContext)
 
-  const entriesByStatus = entries.filter(entry => entry.status === status)
+  const entriesByStatus = useMemo( () => entries.filter(entry => entry.status === status), [ entries ])
   
   return (
     <div>
