@@ -19,3 +19,7 @@ mongodb://localhost:27017/entriesdb
 ## Env variables configuration
 
 Rename the file __.env.template__ to __.env__
+
+## Populate db with seed data
+
+Having `docker-compose` up. You can request <http://localhost:3000/api/seed> endpoint to populate local db with data
