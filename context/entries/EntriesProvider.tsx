@@ -36,8 +36,8 @@ export const EntriesProvider:FC<Props> = ({ children }) => {
     const updateEntry = ( entry: Entry ) => dispatch({ type: 'Entry-Updated', payload: entry})
 
     const refreshEntries = async() => {
-        const resp = await entriesApi.get<Entry[]>('/entries')
-        console.log(resp)
+        const { data } = await entriesApi.get<Entry[]>('/entries')
+        dispatch({ type: 'Refresh-Data', payload: data })
     }
 
     useEffect(() => {
