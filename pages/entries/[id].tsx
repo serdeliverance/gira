@@ -1,6 +1,10 @@
-import { Button, CardActions, CardContent, CardHeader, Grid, TextField } from "@mui/material"
+import { capitalize, Button, CardActions, CardContent, CardHeader, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, TextField, IconButton } from "@mui/material"
 import { Layout } from "../../components/layouts"
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
+import { EntryStatus } from "../../interfaces"
+import DeleteIcon from '@mui/icons-material/Delete'
+
+const STATUS: EntryStatus[] = ['pending', 'in-progress', 'finished']
 
 export const EntryPage = () => {
     return (
@@ -17,11 +21,23 @@ export const EntryPage = () => {
                             autoFocus
                             multiline
                             label="New entry"
-                        >
+                        />
+                        <FormControl>
+                            <FormLabel>State:</FormLabel>
+                            <RadioGroup row>
+                                {
+                                    STATUS.map(option => (
+                                        <FormControlLabel 
+                                            key={option}
+                                            value={option}
+                                            control={ <Radio />}
+                                            label={capitalize(option)}
+                                        />
+                                    ))
+                                }
+                            </RadioGroup>
+                        </FormControl>
 
-                            {/* RADIO */}
-
-                        </TextField>
                     </CardContent>
                     <CardActions>
                         <Button
@@ -34,6 +50,15 @@ export const EntryPage = () => {
                     </CardActions>
                 </Grid>
             </Grid>
+
+            <IconButton sx={{
+                position:'fixed',
+                bottom: 30,
+                right: 30,
+                backgroundColor: 'text.secondary'
+            }}>
+                <DeleteIcon />
+            </IconButton>
         </Layout>
     )
 }
