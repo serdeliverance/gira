@@ -3,7 +3,7 @@ import { Layout } from "../../components/layouts"
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
 import { EntryStatus } from "../../interfaces"
 import DeleteIcon from '@mui/icons-material/Delete'
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, useMemo, useState } from "react"
 
 const STATUS: EntryStatus[] = ['pending', 'in-progress', 'finished']
 
@@ -12,6 +12,8 @@ export const EntryPage = () => {
     const [inputValue, setInputValue] = useState('')
     const [status, setStatus] = useState<EntryStatus>('pending')
     const [touched, setTouched] = useState(false)
+
+    const isNotValid = useMemo(() => inputValue.length <= 0 && touched, [inputValue, touched])
 
     const onInputValueChange = (event: ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value)
@@ -39,6 +41,9 @@ export const EntryPage = () => {
                             label="New entry"
                             value={inputValue}
                             onChange={onInputValueChange}
+                            helperText={ isNotValid && 'Ingress a value'}
+                            onBlur={ () => setTouched(true) }
+                            error={ isNotValid }
                         />
                         <FormControl>
                             <FormLabel>State:</FormLabel>
@@ -67,6 +72,7 @@ export const EntryPage = () => {
                             variant="contained"
                             fullWidth
                             onClick={onSave}
+                            disabled={ inputValue.length <= 0 }
                         >
                             Save
                         </Button>
