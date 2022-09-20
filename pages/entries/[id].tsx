@@ -3,11 +3,21 @@ import { Layout } from "../../components/layouts"
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
 import { EntryStatus } from "../../interfaces"
 import DeleteIcon from '@mui/icons-material/Delete'
-import { ChangeEvent, useMemo, useState } from "react"
+import { ChangeEvent, FC, useMemo, useState } from "react"
+import { GetServerSideProps } from 'next'
+import { isValidObjectId } from "mongoose"
+import { redirect } from "next/dist/server/api-utils"
 
 const STATUS: EntryStatus[] = ['pending', 'in-progress', 'finished']
 
-export const EntryPage = () => {
+interface Props {
+    id: string
+}
+
+export const EntryPage: FC<Props> = ({id}) => {
+
+    console.log(id)
+    
 
     const [inputValue, setInputValue] = useState('')
     const [status, setStatus] = useState<EntryStatus>('pending')
@@ -90,6 +100,25 @@ export const EntryPage = () => {
             </IconButton>
         </Layout>
     )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+    const { id } = params as { id: string } 
+
+    if (!isValidObjectId(id)) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
+
+    return {
+        props: {
+            id        
+        }
+    }
 }
 
 export default EntryPage
