@@ -1,26 +1,22 @@
 import { capitalize, Button, CardActions, CardContent, CardHeader, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, TextField, IconButton } from "@mui/material"
 import { Layout } from "../../components/layouts"
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
-import { EntryStatus } from "../../interfaces"
+import { Entry, EntryStatus } from "../../interfaces"
 import DeleteIcon from '@mui/icons-material/Delete'
 import { ChangeEvent, FC, useMemo, useState } from "react"
 import { GetServerSideProps } from 'next'
-import { isValidObjectId } from "mongoose"
-import { redirect } from "next/dist/server/api-utils"
+import { db, dbEntries } from "../../database"
 
 const STATUS: EntryStatus[] = ['pending', 'in-progress', 'finished']
 
 interface Props {
-    id: string
+    entry: Entry
 }
 
-export const EntryPage: FC<Props> = ({id}) => {
+export const EntryPage: FC<Props> = ({entry}) => {    
 
-    console.log(id)
-    
-
-    const [inputValue, setInputValue] = useState('')
-    const [status, setStatus] = useState<EntryStatus>('pending')
+    const [inputValue, setInputValue] = useState(entry.description)
+    const [status, setStatus] = useState<EntryStatus>(entry.status)
     const [touched, setTouched] = useState(false)
 
     const isNotValid = useMemo(() => inputValue.length <= 0 && touched, [inputValue, touched])
@@ -105,7 +101,9 @@ export const EntryPage: FC<Props> = ({id}) => {
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     const { id } = params as { id: string } 
 
-    if (!isValidObjectId(id)) {
+    const entry = await dbEntries.getEntryById(id)
+
+    if (!entry) {
         return {
             redirect: {
                 destination: '/',
@@ -116,7 +114,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
     return {
         props: {
-            id        
+            entry        
         }
     }
 }
