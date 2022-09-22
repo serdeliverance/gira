@@ -30,19 +30,20 @@ export const EntriesProvider:FC<Props> = ({ children }) => {
         dispatch({ type: 'Add-Entry', payload: data })
     }
 
-    const updateEntry = async ( {_id, description, status}: Entry ) => {
+    const updateEntry = async ( {_id, description, status}: Entry, showSnackbar = false ) => {
         try {
             const { data } = await entriesApi.put<Entry>(`/entries/${ _id }`, { description, status })
             dispatch({ type: 'Entry-Updated', payload: data})
 
-            enqueueSnackbar('Updated entry', {
-                variant: 'success',
-                autoHideDuration: 1500,
-                anchorOrigin: {
-                    vertical: 'top',
-                    horizontal: 'right'
-                }
-            })
+            if (showSnackbar)
+                enqueueSnackbar('Updated entry', {
+                    variant: 'success',
+                    autoHideDuration: 1500,
+                    anchorOrigin: {
+                        vertical: 'top',
+                        horizontal: 'right'
+                    }
+                })
         } catch (error) {
             console.log(error)
         }
