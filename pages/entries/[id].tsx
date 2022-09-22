@@ -7,6 +7,7 @@ import { ChangeEvent, FC, useContext, useMemo, useState } from "react"
 import { GetServerSideProps } from 'next'
 import { db, dbEntries } from "../../database"
 import { EntriesContext, EntriesProvider } from "../../context/entries"
+import { dateUtils } from "../../utils"
 
 const STATUS: EntryStatus[] = ['pending', 'in-progress', 'finished']
 
@@ -48,7 +49,7 @@ export const EntryPage: FC<Props> = ({entry}) => {
         <Layout>
             <Grid container justifyContent='center' sx={{marginTop: 2}}>
                 <Grid item xs={12} sm={8} md={6}>
-                    <CardHeader title='Entry' subheader={`Created at...`}></CardHeader>
+                    <CardHeader title='Entry' subheader={`Created at ${dateUtils.getFormatDistanceToNow(entry.createdAt)}`}></CardHeader>
 
                     <CardContent>
                         <TextField
