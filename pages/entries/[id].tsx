@@ -3,9 +3,10 @@ import { Layout } from "../../components/layouts"
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
 import { Entry, EntryStatus } from "../../interfaces"
 import DeleteIcon from '@mui/icons-material/Delete'
-import { ChangeEvent, FC, useMemo, useState } from "react"
+import { ChangeEvent, FC, useContext, useMemo, useState } from "react"
 import { GetServerSideProps } from 'next'
 import { db, dbEntries } from "../../database"
+import { EntriesContext, EntriesProvider } from "../../context/entries"
 
 const STATUS: EntryStatus[] = ['pending', 'in-progress', 'finished']
 
@@ -14,6 +15,8 @@ interface Props {
 }
 
 export const EntryPage: FC<Props> = ({entry}) => {    
+
+    const { updateEntry } = useContext(EntriesContext)
 
     const [inputValue, setInputValue] = useState(entry.description)
     const [status, setStatus] = useState<EntryStatus>(entry.status)
@@ -29,7 +32,17 @@ export const EntryPage: FC<Props> = ({entry}) => {
         setStatus(event.target.value as EntryStatus)
     }
 
-    const onSave = () => {}
+    const onSave = () => {
+        if (inputValue.trim().length === 0) return
+
+        const updatedEntry: Entry = {
+            ...entry,
+            status,
+            description: inputValue
+        }
+
+        updateEntry(updatedEntry)
+    }
 
     return (
         <Layout>
